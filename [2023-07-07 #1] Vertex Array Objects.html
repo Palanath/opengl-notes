@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Vertex Array Objects (7/7/2023 3:40PM) #1</title>
+<link rel="stylesheet" type="text/css"
+	href="stylesheets/notes.css">
+</head>
+<body>
+	<h1>Vertex Array Objects (7/7/2023 3:40PM) #1</h1>
+	<p>A Vertex Array Object encapsulates the following:</p>
+	<ol>
+		<li>1+ Vertex Buffer(s)</li>
+		<li>(Optional) 1 Index Buffer</li>
+		<li>1+ Vertex Attributes</li>
+		<li>"Enabled" state for Vertex Attributes</li>
+	</ol>
+	<p class="small">
+		VAOs are objects that store <i>pointers</i> to each of these
+		constituent objects, so if a Vertex Buffer Object (VBO) is attached to
+		a VAO, and then the VBO is changed, draw calls using the VAO will see
+		that change.
+	</p>
+	<p>Each of these objects can be bound individually, but to do so
+		would require an OpenGL API call for each binding. When a VAO is used,
+		the VAO can be bound in one call.</p>
+	<p>In OpenGL's "Compatibility" profile, there's a default VAO, so
+		the developer does not have to set up a VAO to draw things. In the
+		"Core" profile, this is not the case; a developer needs to set up a
+		VAO to draw vertex data on the GPU.</p>
+	<p class="small">A common misconception is that a VAO should be set
+		up then used to render different models, each with its own VBO. In
+		practice, each mesh typically has its own VAO. Even though a VAO can
+		encapsulate multiple VBOs at the same time, these data all get passed
+		to the GPU as one whole object going through the rendering pipeline,
+		because they're all coming from the same VAO.</p>
+	<p>
+		The call to <code>glVertexAttribPointer</code> makes use of the
+		currently bound <b>VBO</b>. Specifically, whenever vertex attribute
+		information is specified using <code>glVertexAttribPointer</code>, it
+		is specified <i>for the currently bound VBO</i>, (and that specified
+		information is stored inside the VAO). When the VAO is used for
+		drawing later on, the data for the vertex attribute that was specified
+		is drawn from the VBO bound when <code>glVertexAttribPointer</code>
+		was called.
+	</p>
+	<p class="small">
+		<code>glVertexAttribPointer</code> specifies the format information
+		for a single vertex attribute, which gets stored in the currently
+		bound VAO. That attribute information contains a reference to the VBO
+		to grab the actual data from. When drawing, the currently bound VBO is
+		not used, but rather, whatever VBO is referenced in the VAO is used.
+		This is because different vertex attributes may come from different
+		VBOs and only one VBO can be bound at once, so it would not be
+		possible to bind multiple VBOs for multiple sources for vertex
+		attributes simultaneously during one draw call. Instead, references to
+		the VBOs to grab vertex attributes from are stored in the VAO.
+	</p>
+	<p>
+		After a VAO is finished being set up, the vertex attribute arrays that
+		were enabled should be disabled. Apparently, the state affected by
+		calls to <code>glEnableVertexAttribArray</code> persists beyond the
+		VAO binding.
+	</p>
+</body>
+</html>
