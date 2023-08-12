@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>C &amp; C++ Libraries (8/3/2023 7:06PM) #1</title>
+<style>
+/* Palanath's "Notes" Stylesheet */
+
+:root {
+	font-size: 1.3em;
+	font-family: sans-serif;
+}
+
+body {
+	margin: 3rem;
+}
+
+h1 {
+	text-align: center;
+	font-size: 2.4em;
+}
+
+h2 {
+	font-size: 2em;
+}
+
+h3 {
+	font-size: 1.5em;
+}
+
+h4 {
+	font-size: 1.2em;
+}
+
+h5 {
+	font-size: 1em;
+}
+
+h6 {
+	font-size: .83em;
+}
+
+h5, h6 {
+	font-style: italic;
+}
+
+.small {
+	font-style: italic;
+	font-size: .65em;
+}
+
+.small em {
+	font-style: normal;
+}
+
+.important-sight {
+	background: green;
+	color: #ffee00;
+}
+
+table, th, td {
+	border: 1px solid;
+	padding: 5px;
+}
+table {
+	border-collapse: collapse;
+}
+
+</style>
+</head>
+<body>
+	<h1>C &amp; C++ Libraries (8/3/2023 7:06PM) #1</h1>
+	<p>
+		Source code files are compiled into <i>object files</i> by the
+		compiler. Object code files are linked into an executable, by the
+		linker.
+	</p>
+	<h2>Symbol Table</h2>
+	<p>An object file contains a symbol table, which maps identifiers
+		(names of functions and variables) used in the program (such as
+		function names, global variable names, etc.) to memory offsets within
+		the object code file. At these memory offsets in the object file is
+		the machine code implementation of the symbol.</p>
+	<p class="small">
+		For example, for a function named <code>add</code>, the symbol table
+		will contain an entry that maps the text <code>add</code> to a
+		different location in the object file. At that location will be the
+		machine code instructions comprising the body of the <code>add</code>
+		function.
+	</p>
+	<h2>Linker</h2>
+	<p>Identifiers in the symbol table are referred to as symbols.</p>
+	<p>
+		The linker takes as input a group of object files, resolves all
+		named-references, and produces an executable. A valid linker could
+		essentially copy the machine-code instruction bodies of every function
+		into the executable function, and then replace all the function calls
+		<code>JMP</code> statements.
+	</p>
+	<h2>Libraries</h2>
+	<p>There are two types of libraries:</p>
+	<ol>
+		<li><b>Static</b> Libraries - simply a bundled group of object
+			files.</li>
+		<li><b>Shared (Dynamic)</b> Libraries - a bundled group of object
+			files that were each compiled <i>position-independently</i>. These
+			can be loaded by the operating system's dynamic library loader at
+			runtime.</li>
+	</ol>
+	<p class="small">
+		Object files contain enough information to be able to invoke and
+		execute functions by source-code name. That said, the object file does
+		not store information about the parameter list of a function (i.e.
+		what arguments it <i>should</i> be called with).
+	</p>
+	<h2>Usage</h2>
+	<p>Whether using a static or shared library, a programmer will
+		realistically need the header files that the library was compiled
+		with. Libraries (both static and shared) are always used with their
+		corresponding header files. The headers are included during
+		compilation, and the libraries are referenced during linking.</p>
+</body>
+</html>
